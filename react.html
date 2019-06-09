@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>react</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+
+        }
+        #canvas{
+            width: 700px;
+            height: 500px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let speedX = 2;
+            let speedY = 2;
+            let nowX = 0;
+            let nowY = 0;
+            let reactX = 50;
+            let reactY = 50;
+            setInterval(() => {
+                nowX += speedX;
+                nowY += speedY;
+                ctx.fillStyle = 'red';
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                if(nowY > canvas.height - reactY) {
+                    nowY = canvas.height - reactY;
+                    speedY *=-1;
+                } else if(nowX > canvas.width - reactX) {
+                    nowX = canvas.width - reactX;
+                    speedX *= -1;
+                }
+
+                if(nowY < 0) {
+                    nowY = 0;
+                    speedY *=-1
+                } else if(nowX < 0) {
+                    nowX = 0;
+                    speedX *=-1
+                }
+
+                ctx.fillRect(nowX,nowY,reactX,reactY)  
+            }, 30);
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="700px" height="500px"></canvas>
+</body>
+</html>
