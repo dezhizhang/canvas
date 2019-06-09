@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>time</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            setInterval(draw,1000)
+            draw();
+            function draw() {
+            
+                let x = 200;
+                let y = 200;
+                let r = 100;
+                let date = new Date();
+                let hour = date.getHours();
+                let minitus = date.getMinutes();
+                let seconds = date.getSeconds();
+                let hourValue = (hour * 30 - 90 + minitus / 2) * Math.PI / 180;
+                let minitusValue = (minitus * 6 - 90) * Math.PI / 180;
+                let secondsValue = (seconds * 6 - 90) * Math.PI / 180;
+                ctx.save();
+                ctx.clearRect(0,0,400,400);
+
+                for(let i=0;i<60;i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(x,y);
+                    ctx.arc(x,y,r,i * 6 * Math.PI /180,(i+1) * 6*Math.PI / 180);
+                    ctx.closePath();
+                    ctx.stroke();
+                };
+
+                ctx.beginPath();
+                ctx.fillStyle = 'white';
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r * 0.95,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+
+                for(let j=0;j<12;j++) {
+                    ctx.beginPath();
+                    ctx.lineWidth= 2;
+                    ctx.moveTo(x,y);
+                    ctx.arc(x,y,r,j * 30 * Math.PI / 180, (j+1) * 30 * Math.PI / 180);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                };
+
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r * 0.9,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+
+                //中心小圆点
+                ctx.beginPath();
+                ctx.fillStyle='black'
+                ctx.lineWidth = 3;
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r* 0.03,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill()
+
+                //时针
+                ctx.beginPath();
+                ctx.lineWidth = 3;
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r* 0.6,hourValue,hourValue);
+                ctx.closePath();
+                ctx.stroke();
+                //分针
+                ctx.beginPath();
+                ctx.lineWidth= 2;
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r * 0.8,minitusValue,minitusValue);
+                ctx.closePath();
+                ctx.stroke();
+                //秒针
+                ctx.beginPath();
+                ctx.lineWidth = 1;
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r * 0.95,secondsValue,secondsValue);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+            }
+
+    
+        }
+    </script>
+</head>
+<body>
+    <canvas width="400" height="400" id="canvas"></canvas>
+</body>
+</html>
