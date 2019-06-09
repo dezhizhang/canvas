@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现画线</title>
+    <style>
+        body{
+            background: #000;
+            margin: 0;
+            padding: 0;
+        }
+        #canvas{
+            width: 500px;
+            height: 500px;
+            background: #fff;
+        }
+        input{
+            width: 60px;
+            height: 32px;
+            max-height: 32px;
+            max-width: 60px;
+            border: none;
+            text-align: center;
+
+        }
+        .active{
+            background: #f60;
+            color: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let aInput = document.getElementsByTagName('input');
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let num = 0
+
+            for(let i=0;i<aInput.length;i++) {
+                aInput[i].index = i
+                aInput[i].onclick = function() {
+                    for(let j=0;j<aInput.length;j++) {
+                        aInput[j].className = '';
+                    }
+                    this.className = 'active';
+                    num = this.index;
+                }
+            }
+
+            canvas.onmousedown = function(e) {
+                let ev = e || window.event;
+                let x  = ev.pageX - canvas.offsetLeft;
+                let y  = ev.pageY - canvas.offsetTop;
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                canvas.onmousemove = function(e) {
+                    let ev = e || window.event;
+                    let x = ev.pageX - canvas.offsetLeft;
+                    let y = ev.pageY - canvas.offsetTop;
+
+                    if(num == 0) {
+                        ctx.lineTo(x,y);
+                        ctx.stroke();
+                    
+                    } else if(num == 1) {
+                        ctx.clearRect(x,y,20,20);
+                    }
+                  
+                }
+                canvas.onmouseup = function() {
+                    canvas.onmousemove = null;
+                    canvas.onmouseup = null;
+                    ctx.closePath();
+
+                }
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="画线" class="active"/>
+    <input type="button" value="清除"/><br/>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>
