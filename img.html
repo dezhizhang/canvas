@@ -19,15 +19,44 @@
         }
     </style>
     <script type="text/javascript">
+        // window.onload = function() {
+        //     let canvas = document.getElementById('canvas');
+        //     let ctx = canvas.getContext('2d');
+
+        //     let image = new Image();
+        //     image.onload = function() {
+        //         ctx.drawImage(image,20,20,100,100,10,10,100,50);
+        //     }
+        //     image.src = './img/1.jpg';
+        // }
+
+        // window.onload = function() {
+        //     let canvas = document.getElementById('canvas');
+        //     let ctx = canvas.getContext('2d');
+
+        //     let image = new Image();
+        //     image.onload = function() {
+        //         let bg = ctx.createPattern(image,'no-repeat');
+        //         ctx.fillStyle = bg;
+        //         ctx.fillRect(0,0,500,500)
+        //     }
+        //     image.src = './img/1.jpg';
+
+        // }
+
         window.onload = function() {
             let canvas = document.getElementById('canvas');
             let ctx = canvas.getContext('2d');
 
             let image = new Image();
             image.onload = function() {
-                ctx.drawImage(image,20,20,100,100,10,10,100,50);
+                let bg = ctx.createPattern(image,'repeat');
+                ctx.fillStyle = bg;
+                ctx.fillRect(0,0,500,500);
+
             }
             image.src = './img/1.jpg';
+
         }
     </script>
 </head>
