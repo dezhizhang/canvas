@@ -34,16 +34,44 @@
         // }
 
 
+        // window.onload = function() {
+        //     let canvas = document.getElementById('canvas');
+        //     let ctx = canvas.getContext('2d');
+        //     let gradient = ctx.createLinearGradient(100,100,200,100);
+        //     gradient.addColorStop(0,'blue');
+        //     gradient.addColorStop(0.5,'yellow');
+        //     gradient.addColorStop(1,'pink');
+            
+        //     ctx.fillStyle = gradient;
+        //     ctx.fillRect(100,100,100,100);
+
+        // }
+
+        // window.onload = function() {
+        //     let canvas = document.getElementById('canvas');
+        //     let ctx = canvas.getContext('2d');
+        //     let graditent = ctx.createRadialGradient(150,150,50,200,200,50);
+        //     graditent.addColorStop(0,'blue');
+        //     graditent.addColorStop(0.5,'yellow');
+        //     graditent.addColorStop(1,'red');
+
+
+        //     ctx.fillStyle = graditent
+        //     ctx.fillRect(100,100,200,200);
+
+        // }
+
         window.onload = function() {
             let canvas = document.getElementById('canvas');
             let ctx = canvas.getContext('2d');
-            let gradient = ctx.createLinearGradient(100,100,200,100);
-            gradient.addColorStop(0,'blue');
-            gradient.addColorStop(0.5,'yellow');
-            gradient.addColorStop(1,'pink');
-            
-            ctx.fillStyle = gradient;
-            ctx.fillRect(100,100,100,100);
+
+            let graditent = ctx.createRadialGradient(150,150,50,200,200,100);
+            graditent.addColorStop(0,'blue');
+            graditent.addColorStop(0.5,'red');
+            graditent.addColorStop(1,'pink');
+
+            ctx.fillStyle = graditent;
+            ctx.fillRect(100,100,200,200);
             
         }
     </script>
