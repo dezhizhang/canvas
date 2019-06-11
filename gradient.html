@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>gradient</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+
+    <script type="text/javascript">
+        // window.onload = function() {
+        //     let canvas = document.getElementById('canvas');
+        //     let ctx = canvas.getContext('2d');
+        //     let gradient = ctx.createLinearGradient(100,100,200,200);
+        //     gradient.addColorStop(0,'blue');
+        //     gradient.addColorStop(0.5,'yellow');
+        //     gradient.addColorStop(1,'pink');
+
+
+        //     ctx.fillStyle = gradient
+        //     ctx.fillRect(100,100,100,100);
+
+        // }
+
+
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let gradient = ctx.createLinearGradient(100,100,200,100);
+            gradient.addColorStop(0,'blue');
+            gradient.addColorStop(0.5,'yellow');
+            gradient.addColorStop(1,'pink');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(100,100,100,100);
+            
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
