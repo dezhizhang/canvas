@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas合成</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #div1{
+            width: 400px;
+            height: 400px;
+            position: relative;
+            left: 100px;
+
+        }
+        #canvas{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 400px;
+            height: 400px;
+            z-index: 1;
+        }
+        #div2{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url('./img/2.jpg');
+            z-index: 0;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let oBtn = true;
+
+            let image = new Image();
+            image.onload = function() {
+                ctx.drawImage(image,0,0,400,400);
+                canvas.onmousedown = function(ev) {
+                    let x = ev.offsetX;
+                    let y = ev.offsetY;
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 30
+                    ctx.lineGap = 'round';
+                    if(oBtn) {
+                        ctx.moveTo(x,y);
+                        oBtn = false;
+                    }
+                    ctx.lineTo(x+1,y+1);
+                    ctx.stroke();
+                    canvas.onmousemove = function(ev) {
+                        let x = ev.offsetX;
+                        let y = ev.offsetY;
+                        ctx.lineTo(x+1,y+1);
+                        ctx.stroke();
+                    }
+                    canvas.onmouseup = function() {
+                        canvas.onmousemove = null;
+                        canvas.onmouseup = null;
+                        let getImg = ctx.getImageData(0,0,image.width,image.height);
+                        let getW = getImg.width;
+                        let getH = getImg.height;
+                        let count = 0;
+
+                        for(let i=0;i<getH;i++) {
+                            for(let j=0;j<getW;j++) {
+                                let colors = getXY(getImg,i,j);
+                                if(colors[3] ==0) {
+                                    count++;
+                                }
+                            }
+                        }
+
+                        if(count > (getH*getW) / 2) {
+                            canvas.parentNode.removeChild(canvas);
+                        }
+
+                    }
+                    return false;
+                }
+            }
+            image.src = './img/1.jpg';
+
+            function getXY(img,x,y) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                let colors = [];
+                colors[0] = d[(y*w+x)*4];
+                colors[1] = d[(y*w+x)*4 + 1];
+                colors[2] = d[(y*w + x)*4 + 2];
+                colors[3] = d[(y*w + x)*4 + 3];
+                return colors;
+            }
+
+            function setXY(img,x,y,colors) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                d[(y*w+x)*4] = colors[0];
+                d[(y*w+x)*4 + 1] = colors[1];
+                d[(y*w + x)*4 + 2] = colors[2];
+                d[(y*w + x)*4 + 3] = colors[3];
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div id="div1">
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <div id="div2"></div>
+    </div>
+    
+</body>
+</html>
