@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多粒子运动</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 900px;
+            height: 500px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let arr = [];
+
+            setInterval(() => {
+                ctx.save();
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    for(let j=0;j<arr.length;j++) {
+                        arr[j].sY += 0.02;
+                        arr[j].x += arr[j].sX;
+                        arr[j].y += arr[j].sY;
+                        if(arr[j].y > canvas.height - arr[j].r) {
+                            arr[j].y = canvas.height - arr[j].r
+                            arr[j].sY*=-1;
+                            arr[j].sY *=0.6;
+
+                        }
+
+                    }
+                    for(let i=0;i<arr.length;i++) {
+                        ctx.fillStyle = `rgba(${arr[i].c1},${arr[i].c2},${arr[i].c3},${arr[i].c4})`;
+                        ctx.beginPath();
+                        ctx.arc(arr[i].x,arr[i].y,arr[i].r,0,360*Math.PI/180);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+                ctx.restore();
+            },1000/60)
+
+            setInterval(() =>{
+                let r = 10;
+                let x = canvas.width / 2;
+                let y = canvas.height - r;
+                let c1 = Math.floor(Math.random() * 255);
+                let c2 = Math.floor(Math.random() * 255);
+                let c3 = Math.floor(Math.random() * 255);
+                let c4 = Math.random();
+                let sX = Math.random() * 6 - 3;
+                let sY = - (Math.random()  * 3 + 1)
+                arr.push({x,y,r,c1,c2,c3,c4,sX,sY});
+            },500)
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="900" height="500"></canvas>
+</body>
+</html>
