@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>粒子运动</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #div1{ 
+            position: absolute;
+            left: 100px;
+            width: 578px;
+            height: 384px;
+        }
+        #div1 img{
+            background: violet;
+            position: absolute;
+            left: 0;
+            top: 0; 
+            display: none;
+        }
+        #canvas{
+            background: violet;
+            width: 578px;
+            height: 384px;
+        }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+        let oImg = document.getElementById('img');
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let arr = [];
+        let num = 10;
+        let graidW = Math.floor(canvas.width);
+        let graidH = Math.floor(canvas.height);
+        let img = new Image();
+        img.onload = function() {
+            ctx.drawImage(img,0,0);
+            let getImg = ctx.getImageData(0,0,img.width,img.height);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+          
+            for(let i=0;i<graidH;i++) {
+                for(let j=0;j<graidW;j++) {
+                    let colors = getXY(getImg,j*num,i*num);
+                    if(colors[3]!= 0) {
+                        arr.push({x:j*num,y:i*num,bx:Math.floor(Math.random()*canvas.width),by:Math.floor(Math.random() * canvas.height)})
+                    }
+                }
+            }
+            for(let m=0;m<arr.length;m++) {
+                ctx.beginPath();
+                ctx.arc(arr[m].bx,arr[m].by,1,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+        img.src = oImg.src;
+
+        function getXY(img,x,y) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                let colors = [];
+                colors[0] = d[(y*w+x)*4];
+                colors[1] = d[(y*w+x)*4 + 1];
+                colors[2] = d[(y*w + x)*4 + 2];
+                colors[3] = d[(y*w + x)*4 + 3];
+                return colors;
+        }
+
+        function setXY(img,x,y,colors) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                d[(y*w+x)*4] = colors[0];
+                d[(y*w+x)*4 + 1] = colors[1];
+                d[(y*w + x)*4 + 2] = colors[2];
+                d[(y*w + x)*4 + 3] = colors[3];
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="div1">
+        <img id="img" src="./img/3.png"/>
+        <canvas id="canvas" width="578" height="384"></canvas>
+    </div>
+</body>
+</html>
