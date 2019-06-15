@@ -59,9 +59,38 @@
                 ctx.closePath();
                 ctx.fill();
             }
+            setTimeout(() => {
+                move();
+            },1000)
         }
         img.src = oImg.src;
+        move();
+        
+        function move() {
+            ctx.save();
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                let d = 500;
+                let now = Date.now();
+                let timer = setInterval(() => {
+                    let changeTime = now
+                    let t = Math.min(changeTime-now,d);
+                    if(t==d) {
+                        clearInterval(timer);
+                        oImg.style.display='block';
+                    }
+                    for(let i=0;i<arr.length;i++) {
+                        let nowX = (arr[i].x - arr[i].bx) * t/d + arr[i].bx;
+                        let nowY = (arr[i].y - arr[i].by) * t/d + arr[i].by;
+                        ctx.beginPath();
+                        ctx.arc(nowX,nowY,1,0,360*Math.PI/180);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
 
+                },13)
+            ctx.restore();
+
+        }
         function getXY(img,x,y) {
                 let w = img.width;
                 let h = img.height;
@@ -73,7 +102,6 @@
                 colors[3] = d[(y*w + x)*4 + 3];
                 return colors;
         }
-
         function setXY(img,x,y,colors) {
                 let w = img.width;
                 let h = img.height;
