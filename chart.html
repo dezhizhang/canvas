@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>charts</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            let data = {
+                labels:['红色','蓝色','黄色'],
+                dataSoure:[100,100,100],
+                backgroundColor:['red','blue','yellow'],
+                hoverBackgroundColor:['pink','orange','violet']
+            }
+
+            function PieChart(ctx,data){
+                this.ctx = ctx;
+                this.data = data;
+                this.canvas = ctx.canvas;
+                this.init();
+
+            }
+
+            PieChart.prototype.init = function() {
+
+            }
+
+            let picChart = new PieChart(ctx,data);
+
+        }
+        
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
