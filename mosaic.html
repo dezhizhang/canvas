@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>马赛克</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            let image = new Image();
+            image.onload = function() {
+                canvas.width = image.width;
+                canvas.height = image.height * 2
+                ctx.drawImage(image,0,0);
+                let getImage = ctx.getImageData(0,0,image.width,image.height);
+                let getW = getImage.width;
+                let getH = getImage.height;
+                let num = 5;
+                let gridW = Math.floor(getW / num);
+                let gridH = Math.floor(getH / num);
+
+                for(let i=0;i<gridH;i++) {
+                    for(let j=0;j<gridW;j++) {
+                        let colors = getXY(getImage,j*num + Math.floor(Math.random() * num),i*num + Math.floor(Math.random())*num)
+                        for(let m=0;m<num;m++) {
+                            for(let n=0;n<num;n++) {
+                                setXY(getImage,j*num+n,i*num+m,colors)
+                            }
+                        }
+                    }
+                }
+
+                ctx.putImageData(getImage,0,image.height);
+            }
+            image.src = './img/2.jpg';
+            function getXY(img,x,y) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                let colors = [];
+                colors[0] = d[(y*w+x)*4];
+                colors[1] = d[(y*w+x)*4 + 1];
+                colors[2] = d[(y*w + x)*4 + 2];
+                colors[3] = d[(y*w + x)*4 + 3];
+                return colors;
+            }
+
+            function setXY(img,x,y,colors) {
+                let w = img.width;
+                let h = img.height;
+                let d = img.data;
+                d[(y*w+x)*4] = colors[0];
+                d[(y*w+x)*4 + 1] = colors[1];
+                d[(y*w + x)*4 + 2] = colors[2];
+                d[(y*w + x)*4 + 3] = colors[3];
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
