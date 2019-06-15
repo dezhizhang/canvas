@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>round</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            let width = canvas.width;
+            let height = canvas.height;
+            let x = 200;
+            let y = 200;
+            let r = 100;
+            let num = 0;
+
+            function run(num) {
+                ctx.save();
+                ctx.clearRect(0,0,width,height);
+                ctx.beginPath();
+                ctx.fillStyle = '#ccc';
+                ctx.arc(x,y,r,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = 'red';
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r,-90 * Math.PI / 180, (num / 100 * 360 -90)* Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = '#fff';
+                ctx.moveTo(x,y);
+                ctx.arc(x,y,r * 0.8,0,360 * Math.PI / 180);
+                ctx.closePath();
+                ctx.fill();
+
+                let str = num + '%'
+                ctx.beginPath();
+                ctx.font='40px 微软雅黑';
+                ctx.fillStyle = '#000';
+                ctx.textBaseline='top';
+                ctx.textAlign='left';
+                let w = ctx.measureText(str).width;
+                ctx.fillText(str,(width - w) /2,(height - 60)/2);
+            }
+
+            run(num);
+
+            setInterval(() => {
+                num ++;
+                if(num >=100) {
+                    window.location.href = 'http://www.baidu.com'
+                } else {
+                    run(num);
+
+                }
+            },100)
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
