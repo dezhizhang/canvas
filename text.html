@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+
+            ctx.font='60px 微软雅黑';
+            ctx.fillText('hello0',10,10);
+            ctx.Baseline='top';
+            ctx.textAlign='center';
+
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
