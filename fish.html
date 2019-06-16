@@ -22,6 +22,11 @@
             let ctx = canvas.getContext('2d');
             let width = canvas.width;
             let height = canvas.height;
+            let connonWidth = 74;
+            let connonHeight = 63;
+            let connonRotat = 0;
+            let viewHeight = document.documentElement.clientHeight;
+            height = viewHeight < height ? viewHeight : height;
 
             let arr = ['bg.jpg','bullet1.png','cannon1.png','fish1.png'];
             loadImages(arr,(res) => {
@@ -32,12 +37,14 @@
                         ctx.fillStyle = bg;
                         ctx.fillRect(0,0,width,height);
                     ctx.restore();
-
+                    ctx.save();
+                       ctx.translate(width / 2,height - 150);
+                       ctx.rotate(connonRotat);
+                       ctx.translate(-connonWidth / 2,-connonHeight / 2);
+                       ctx.drawImage(res['cannon1'],0,0,connonWidth,connonHeight);
+                    ctx.restore();
                 },1000/60)
-
             })
-
-
             function loadImages(arr,cb) {
                 let iNow = 0;
                 let josn = {};
@@ -58,6 +65,6 @@
     </script>
 </head>
 <body>
-    <canvas id="canvas" width="1280" height="768"></canvas>
+    <canvas id="canvas" width="1024" height="768"></canvas>
 </body>
 </html>
