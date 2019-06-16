@@ -28,11 +28,35 @@
             let width = canvas.width;
             let height = canvas.height;
 
-            let pos = C.getOffset(canvas);
-            canvas.onclick = function() {
-                console.log(pos.x,pos.y);
-                
+            let mouse = C.getOffset(canvas);
+            drawSystem();
+
+            function drawSystem() {
+                ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(0,height / 2);
+                    ctx.lineTo(width,height/2);
+                    ctx.moveTo(width/2,0);
+                    ctx.lineTo(width/2,height);
+                    ctx.stroke();
+                ctx.restore();
+
             }
+
+            canvas.onmousemove = function() {
+                ctx.clearRect(0,0,width,height);
+                let dx = mouse.x - width / 2;
+                let dy = mouse.y - height / 2;
+                let angle = Math.atan2(dx,dy) * 180 / Math.PI;
+                drawSystem();
+                ctx.beginPath();
+                ctx.lineTo(mouse.x,mouse.y);
+                ctx.lineTo(width/2,height/2);
+                ctx.stroke();
+                ctx.fillText(angle,mouse.x,mouse.y);
+            }
+
         }
     </script>
 </head>
