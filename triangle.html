@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三角函数</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            background: #fff;
+        }
+    </style>
+    <script src="./util.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+
+            let pos = C.getOffset(canvas);
+            canvas.onclick = function() {
+                console.log(pos.x,pos.y);
+                
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>
