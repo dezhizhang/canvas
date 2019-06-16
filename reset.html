@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>物体重置</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+        }
+        #canvas{
+            width: 800px;
+            height: 500px;
+            background: #fff;
+            position: absolute;
+            left: 20%;
+            top: 0;
+
+        }
+    </style>
+    <script src="./util.js" type="text/javascript"></script>
+    <script src="./ball.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx  = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+
+            let balls = [];
+            let g = 0.05;
+            for(let i=0;i<100;i++) {
+                balls.push(new Ball({
+                    x:width / 2,
+                    y:height,
+                    r:Math.random() > 0.9 ? C.rp([25,40]):C.rp([15,30]),
+                    fillStyle:C.createColor(),
+                    vx:C.rp([-3,3]),
+                    vy:C.rp([0,-10])
+                }))
+            }
+
+            console.log(balls);
+
+
+            function drawBall(ball) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                ball.vy += g;
+                if(ball.x -ball.r >= width || ball.x + ball.r <=0 || ball.y - ball.r >=height || ball.y + ball.r <=0  ) {
+                    ball.x = width / 2;
+                    ball.y = height;
+                    ball.vx = C.rp([-3,3]);
+                    ball.vy = C.rp([0,-10]);
+                }
+
+                ball.render(ctx);
+            }
+
+            (function move() {
+                window.requestAnimationFrame(move);
+                ctx.clearRect(0,0,width,height);
+                for(let i=0;i<balls.length;i++) {
+                    drawBall(balls[i])
+                }
+            })()
+
+            
+        }
+    </script>
+  
+</head>
+<body>
+    <canvas id="canvas" width="800px" height="600px"></canvas>
+</body>
+</html>

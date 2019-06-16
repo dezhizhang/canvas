@@ -26,3 +26,23 @@ C.toAngle = function(red) {
     return red * 180 / Math.PI
 }
 
+//生成随机数
+C.rp = function(arr,int) {
+    let max = Math.max(...arr);
+    let min = Math.min(...arr);
+    let num = Math.random() * (max - min) + min;
+    return int ? Math.round(num):num
+}
+
+//生成随机颜色
+C.createColor = function() {
+    let c1 = Math.floor(Math.random() * 255);
+    let c2 = Math.floor(Math.random() * 255);
+    let c3 = Math.floor(Math.random() * 255);
+    let c4 = Math.random();
+    return `rgba(${c1},${c2},${c3},${c4})`
+}
+
+
+
+
