@@ -29,6 +29,17 @@
             let json = {x:width/2,y:height/2,r:50}
             let ball = new Ball(json);
             ball.render(ctx);
+            let angle = 0;
+            let swing = 160;
+
+           (function move(){
+               window.requestAnimationFrame(move);
+               ctx.clearRect(0,0,width,height);
+               ball.x  = width / 2 + Math.sin(angle) * swing;
+               angle+= 0.05;
+               angle%=Math.PI  * 2;
+               ball.render(ctx);
+           })()
 
         }
     </script>
