@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>边界检测</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            width: 500px;
+            height: 500px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript" src="./ball.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+            let arr = [];
+            let c1 = Math.floor(Math.random() * 255);
+            let c2 = Math.floor(Math.random() * 255);
+            let c3 = Math.floor(Math.random() * 255);
+            let c4 = 1;
+            for(let i=0;i<10;i++) {
+                arr.push({
+                    x:Math.random() * width,
+                    y:Math.random() * height,
+                    r:Math.random() * 20 + 30,
+                    fillStyle:`raba(${c1},${c2},${c3},${c4})`,
+                    vx:(Math.random() - 0.5) * 3,
+                    vy:(Math.random() - 0.5) * 3,
+                    id:i
+                })
+            }
+
+           
+
+
+        }
+    </script>
+</head>
+<body>
+   <canvas id="canvas" width="500" height="500"></canvas> 
+</body>
+</html>
