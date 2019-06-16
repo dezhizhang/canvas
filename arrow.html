@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>arrow</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            width: 500px;
+            height: 500px;
+            background: #fff;
+        }
+    </style>
+    <script src="./util.js"></script>
+    <script src="./arrow.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+
+            let mouse = C.getOffset(canvas);
+            let json = {x:width/2,y:height/2,w:180,h:60}
+            let arrow = new Arrow(json);
+            arrow.render(ctx);
+
+            canvas.onmousemove = function() {
+                let dx = mouse.x - arrow.x;
+                let dy = mouse.y - arrow.y;
+                arrow.rotation = Math.atan2(dx,dy);
+                ctx.clearRect(0,0,width,height);
+                arrow.render(ctx);
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>
