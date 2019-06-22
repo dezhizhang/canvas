@@ -31,6 +31,8 @@
             let mouse = C.getOffset(canvas);
             let easing = 0.03;
             let moving = false;
+            let lastX = 0;
+            let lastY = 0;
 
 
             let ball = new Ball({
@@ -64,15 +66,43 @@
                 ball.x += ball.vx;
                 ball.y += ball.vy;
 
+                //边界检测
+                if(checkHit() || ball.x - ball.r > width || ball.x + ball.r <0 || ball.y + ball.r <0 || ball.y - ball.r > height) {
+                    moving = false;
+                    ball.x = 50;
+                    ball.y = 350;
+                }
+                lastX = ball.x;
+                lastY = ball.y;
+                
+
+
+            }
+
+            function checkHit() {
+                let k = (ball.y - lastY) / (ball.x - lastX);
+                let b = lastY - k * lastX;
+
+                let k2 = 0;
+                let b2 = ball.y;
+
+                let cx = b2 - b2 / k - k2;
+                let cy = k * cx + b
+
+                if(cx-ball.r / 2 > box.x && cx + ball.r / 2 <box.r + ball.width && ball.y - ball.r > box.y) {
+                    console.log('小球进入了')
+                    return true;
+
+                }
+
             }
 
             canvas.onclick = function() {
                 moving = true;
                 ball.vx = (mouse.x - ball.x) * easing;
                 ball.vy = (mouse.y - ball.y) * easing;
-
-                console.log('1');
-
+                lastX = ball.x;
+                lastY = ball.y;
 
             }
 
