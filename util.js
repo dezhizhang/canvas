@@ -9,14 +9,12 @@ C.getOffset = function(ele) {
     });
     return mouse;
 }
-
 //坐标系转换
 C.eventWrapper = function(ev) {
     let {pageX,pageY,target} = ev;
     let {left,top} = target.getBoundingClientRect();
     return {x:pageX-left,y:pageY-top}
 }
-
 //用度转弧度
 C.toRed = function(angle) {
     return angle * Math.PI / 180;
@@ -25,7 +23,6 @@ C.toRed = function(angle) {
 C.toAngle = function(red) {
     return red * 180 / Math.PI
 }
-
 //生成随机数
 C.rp = function(arr,int) {
     let max = Math.max(...arr);
@@ -33,7 +30,6 @@ C.rp = function(arr,int) {
     let num = Math.random() * (max - min) + min;
     return int ? Math.round(num):num
 }
-
 //生成随机颜色
 C.createColor = function() {
     let c1 = Math.floor(Math.random() * 255);
