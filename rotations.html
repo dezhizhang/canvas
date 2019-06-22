@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>高级坐标旋转</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+        #canvas{
+            width: 500px;
+            height: 500px;
+            background: #fff;
+        }
+    </style>
+    <script src="./ball.js" type="text/javascript"></script>
+    <script src="./util.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+            
+            let ball = new Ball({
+                x:C.rp([50,width - 50]),
+                y:C.rp([50,height - 50]),
+                r:25
+            });
+
+            let cx = width / 2;
+            let cy = height / 2;
+            let vr = 0.05;
+            let cos = Math.cos(vr);
+            let sin = Math.sin(vr);
+
+
+            move();
+
+            function move() {
+                requestAnimationFrame(move);
+                ctx.clearRect(0,0,width,height);
+
+                let rx = ball.x - cx;
+                let ry = ball.y - cy;
+
+                let x = rx * cos - ry * sin;
+                let y = ry * cos + rx + sin;
+                ball.x = cx + x;
+                ball.y = cy + y;
+                
+                ball.render(ctx);
+
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>
