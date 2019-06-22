@@ -40,6 +40,7 @@
             PieChart.prototype.init = function() {
                 this.getData();
                 this.show();
+                this.bind();
             }
 
             PieChart.prototype.getData = function() {
@@ -60,13 +61,16 @@
                 for(let i=0;i<this.dataDataSoure.length;i++) {
                     this.allNumber+= this.dataDataSoure[i];
                     this.allArr.push(this.allNumber);
+                   
+                }
+                for(let i=0;i<this.dataDataSoure.length;i++) {
                     this.draw(i)
                 }
             }
 
-            PieChart.prototype.draw = function(num) {
+            PieChart.prototype.draw = function(num,hoverColor) {
                 ctx.save();
-                    ctx.fillStyle = this.backGroundColor[num];
+                    ctx.fillStyle = hoverColor || this.backGroundColor[num];
                     ctx.strokeStyle = 'white';
                     ctx.beginPath();
                     ctx.moveTo(this.pieX,this.pieY);
@@ -77,6 +81,28 @@
 
                 ctx.restore();
 
+            }
+
+            PieChart.prototype.bind = function() {
+                let that = this;
+                this.canvas.onmousemove = function(ev) {
+                    let point = {
+                        x:ev.pageX - that.canvas.offsetLeft,
+                        y:ev.pageY - that.canvas.offsetTop
+                    }
+                    that.ctx.clearRect(0,0,canvas.width,canvas.height);
+                    for(let i=0;i<that.dataDataSoure.length;i++) {
+                        that.reDraw(i,point)
+                    }
+                   
+                }
+            }
+
+            PieChart.prototype.reDraw = function(i,point) {
+                    this.draw(i,point);
+                    if(this.ctx.isPointInPath(point.x,point.y)) {
+                        this.draw(i,this.hoverBackgroundColor[i])
+                    }
             }
 
             let picChart = new PieChart(ctx,data);
