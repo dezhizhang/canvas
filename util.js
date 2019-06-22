@@ -46,6 +46,25 @@ C.rectDuang = function(rect1,rect2) {
 C.getDist = function(x1,y1,x2,y2) {
    return Math.sqrt((x2-x1)**2+(y2-y1)**2);
 }
+//边界处理
+C.checkBounce = function(ball,width,height,bounce) {
+    if(ball.x - ball.r <=0) {
+        ball.x = ball.r;
+        ball.vx *= bounce;
+    } else if(ball.x + ball.r >= width) {
+        ball.x = width - ball.r;
+        ball.vx *= bounce
+    }
+
+    if(ball.y - ball.r <=0) {
+        ball.y = ball.r;
+        ball.vy *= bounce;
+
+    } else if(ball.y + ball.r >= height) {
+        ball.y = height - ball.r;
+        ball.vy *= bounce;
+    }
+}
 
 
 
