@@ -38,6 +38,14 @@ C.createColor = function() {
     let c4 = Math.random();
     return `rgba(${c1},${c2},${c3},${c4})`
 }
+//检测
+C.rectDuang = function(rect1,rect2) {
+
+}
+//求两点间的距离
+C.getDist = function(x1,y1,x2,y2) {
+   return Math.sqrt((x2-x1)**2+(y2-y1)**2);
+}
 
 
 

@@ -38,6 +38,44 @@
             }
 
             PieChart.prototype.init = function() {
+                this.getData();
+                this.show();
+            }
+
+            PieChart.prototype.getData = function() {
+                this.dataLabels = this.data.labels;
+                this.dataDataSoure = this.data.dataSoure;
+                this.backGroundColor = this.data.backgroundColor
+                this.hoverBackgroundColor = this.data.hoverBackgroundColor;
+                this.canvas = this.ctx.canvas;
+                this.pieX = this.canvas.width / 2;
+                this.pieY = this.canvas.height / 2;
+                this.pieR = this.canvas.width <= this.canvas.height ? (this.canvas.width - 40) / 2:(this.canvas.height - 40) /2;
+                this.allNumber = 0;
+                this.allArr = [0];
+
+            }
+
+            PieChart.prototype.show = function() {
+                for(let i=0;i<this.dataDataSoure.length;i++) {
+                    this.allNumber+= this.dataDataSoure[i];
+                    this.allArr.push(this.allNumber);
+                    this.draw(i)
+                }
+            }
+
+            PieChart.prototype.draw = function(num) {
+                ctx.save();
+                    ctx.fillStyle = this.backGroundColor[num];
+                    ctx.strokeStyle = 'white';
+                    ctx.beginPath();
+                    ctx.moveTo(this.pieX,this.pieY);
+                    ctx.arc(this.pieX,this.pieY,this.pieR,(this.allArr[num] / this.allNumber) * 360 * Math.PI / 180,(this.allArr[num+1] / this.allNumber) * 360 * Math.PI / 180);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                ctx.restore();
 
             }
 
