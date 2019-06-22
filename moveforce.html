@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多弹动动画</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            width: 400px;
+            height: 400px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./ball.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+            let spring = 0.03;
+            let mouse = C.getOffset(canvas);
+            let ball1Drag = false;
+            let ball2Drag = false;
+
+
+            let ball1 = new Ball({
+                x:C.rp([50,width - 50]),
+                y:C.rp([50,height - 50]),
+                r:20
+            }).render(ctx);
+
+            let ball2 = new Ball({
+                x:C.rp([50,width - 50]),
+                y:C.rp([50,height - 50]),
+                r:20
+            }).render(ctx);
+
+    
+            canvas.onmousedown = function() {
+                if(ball1.isPoint(mouse)) {
+                    ball1Drag = true;
+                }
+                if(ball2.isPoint(mouse)) {
+                    ball2Drag = true;
+                }
+            }
+            canvas.onmousemove = function() {
+                if(ball1Drag) {
+                    ball1.x = mouse.x;
+                    ball1.y = mouse.y;
+                }
+                if(ball2Drag) {
+                    ball2.x = mouse.x;
+                    ball2.y = mouse.y;
+                }
+            }
+
+            canvas.onmouseup = function() {
+                ball1Drag = ball2Drag = false;
+            }
+
+            // (function move() {
+            //     requestAnimationFrame(move);
+            //     ctx.clearRect(0,0,width,height);
+            //     ball1.render(ctx);
+            //     ball2.render(ctx);
+            // })()
+
+            (function move(ctx) {
+                requestAnimationFrame(move);
+                ctx.clearRect(0,0,width,height);
+            })(ctx);
+
+
+
+
+
+
+
+
+
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
