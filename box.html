@@ -10,16 +10,75 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            background: #000;
         }
         #canvas{
             width: 400px;
             height: 400px;
             background: #fff;
-            
         }
     </style>
+    <script src="./util.js" type="text/javascript"></script>
+    <script src="./ball.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+
+            let mouse = C.getOffset(canvas);
+            let activeBall = null;
+
+            let ball1 = new Ball({
+                x:150,
+                y:150,
+                r:50,
+                fillStyle:'rgb(90,227,140)'
+            }).render(ctx);
+
+            let ball2 = new Ball({
+                x:300,
+                y:300,
+                r:40,
+            }).render(ctx);
+            canvas.onmousedown = function() {
+                if(ball1.isPoint(mouse)) {
+                    activeBall = ball1;
+                }
+                if(ball2.isPoint(mouse)) {
+                    activeBall = ball2;
+                }
+            }
+            canvas.onmousemove = function() {
+                if(activeBall) {
+                    activeBall.x = mouse.x;
+                    activeBall.y = mouse.y;
+
+                }
+            }
+            canvas.onmouseup = function() {
+                activeBall = null;
+
+            }
+
+            move();
+            function move() {
+                requestAnimationFrame(move);
+                ctx.clearRect(0,0,width,height);
+                if(C.getDist(ball1.x,ball1.y,ball2.x,ball2.y) <=ball1.r+ball2.r){
+                  console.log('撞上了')
+                }
+                ball1.render(ctx);
+                ball2.render(ctx);
+
+
+            }
+
+        }
+    </script>
 </head>
 <body>
-    
+    <canvas id="canvas" width="400" height="400"></canvas>
 </body>
 </html>
