@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>粒子系统</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas{
+            width: 600px;
+            height: 500px;
+            background: #fff;
+
+        }
+    </style>
+    <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./ball.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let width = canvas.width;
+            let height = canvas.height;
+
+            let balls = [];
+            let num = 200;
+            
+            for(let i=0;i<num;i++) {
+                balls.push(new Ball({
+                    x:C.rp([0,width]),
+                    y:C.rp([0,height]),
+                    r:5,
+                    fillStyle:C.createColor(),
+                    m:1
+                }))
+            }
+
+            function change(ball,i) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                for(let j = i+1;j<num;j++) {
+                    let target = balls[j];
+                    gravitate(ball,target);
+                }
+            }
+
+            function gravitate(p1,p2) {
+                let dx = p2.x - p1.x;
+                let dy = p2.y - p2.y;
+
+                let distSQ = dx**2 + dy**2;
+                let dist = Math.sqrt(distSQ);
+                let force = p1.m * p2.m / distSQ;
+                let ax = force * dx / dist;
+                let ay = force * dy / dist;
+
+                p1.vx += ax / p1.m;
+                p1.vy += ax / p1.m;
+
+                p2.vx -= ax / p2.m;
+                p2.vy -= ax / p2.m;
+
+
+            }
+            function draw(ball,i) {
+                ball.render(ctx);
+            }
+            move();
+            function move() {
+                requestAnimationFrame(move);
+                ctx.clearRect(0,0,width,height);
+                balls.forEach(change);
+                balls.forEach(draw)
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="600"></canvas>
+</body>
+</html>
