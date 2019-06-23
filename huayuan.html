@@ -36,9 +36,8 @@
                 createParticles(width * height / 15000);
             }
 
-            createParticles(width * height / 15000);
 
-
+            window.onresize();
             function createParticles(num) {
                 if(num !==balls.length) {
                     balls.length = 0;
@@ -59,6 +58,11 @@
             function change(ball,i) {
                 ball.x += ball.vx;
                 ball.y += ball.vy;
+
+                for(let j=i+1;j<balls.length;j++) {
+                    let target = balls[j];
+                    checkSpring(ball,target);
+                }
             
                 if(ball.x - ball.r > width) {
                     ball.x = -ball.r;
@@ -71,6 +75,36 @@
                 } else if(ball.y + ball.r <0) {
                     ball.y = height + ball.r;
                 }
+            }
+
+            function checkSpring(ball,target) {
+                let dx = target.x -ball.x;
+                let dy = target.y - ball.y;
+                let dist = Math.sqrt(dx**2 + dy**2);
+                let minDist = width / 10;
+                if(dist < minDist) {
+                    let ax = dx * spring;
+                    let ay = dy * spring;
+                    ball.vx += ax;
+                    ball.vy += ay;
+                    target.vx -= ax;
+                    target.vy -= ay;
+                    drawLine(ball,target,dist,minDist)
+
+                }
+            }
+
+            function drawLine(ball,target,dist,minDist) {
+                ctx.save();
+                ctx.lineWidth = 2 * Math.max(0,(1-dist / minDist));
+                ctx.globalAlpha = Math.max(0,(1-dist / minDist));
+                ctx.strokeStyle = '#fff';
+                ctx.beginPath();
+                ctx.lineTo(ball.x,ball.y);
+                ctx.lineTo(target.x,target.y);
+                ctx.stroke();
+                ctx.restore();
+            
             }
 
             function draw(ball) {
