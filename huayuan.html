@@ -48,12 +48,29 @@
                         x:C.rp([0,width]),
                         y:C.rp([0,height]),
                         r:C.rp([3,10]),
-                        fillStyle:'#fff',
+                        fillStyle:C.createColor(),
                         vx:C.rp([-2,2]),
                         vy:C.rp([-2,2])
                     }))
                 }
 
+            }
+
+            function change(ball,i) {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+            
+                if(ball.x - ball.r > width) {
+                    ball.x = -ball.r;
+                } else if(ball.x + ball.r <0) {
+                    ball.x = width + ball.r;
+                }
+
+                if(ball.y - ball.r > height) {
+                    ball.y = -ball.r;
+                } else if(ball.y + ball.r <0) {
+                    ball.y = height + ball.r;
+                }
             }
 
             function draw(ball) {
@@ -64,7 +81,7 @@
                 requestAnimationFrame(move);
                 ctx.clearRect(0,0,width,height);
                 balls.forEach(draw);
-
+                balls.forEach(change);
             }
             move();
         }
