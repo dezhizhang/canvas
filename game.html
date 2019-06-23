@@ -74,10 +74,13 @@
                     let rect = this.createRect();
                     for(let i=0;i<rect.length;i++) {
                         for(let j=0;j<rect[i].length;j++) {
-                            arr[i][j] = rect[i][j]
+                            arr[i+5][j] = rect[i][j]
                         }
                     }
                     return arr;
+                },
+                run:function() {
+                    
                 }
             }
 
