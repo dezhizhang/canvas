@@ -32,7 +32,9 @@
             let Game = {
                 init:function() {
                     this.arr = this.map(12,12);
-                    this.createRect();
+                    this.createMap();
+                    this.pushMap();
+                
                 },
                 map:function(row,col) {
                     let data = [];
@@ -44,22 +46,42 @@
                    }
                    return data;
                 },
-                createRect:function() {
+                createMap:function() {
+                   this.pushMap();
+
                    for(let i=0;i<this.arr.length;i++) {
                        for(let j=0;j<this.arr[i].length;j++) {
-                           ctx.fillStyle = 'yellow';
+                           ctx.fillStyle = this.arr[i][j] == 0 ? '#1AE608':'yellow'
                            ctx.fillRect(i * 40 +10,j * 40+10,35,35)
                        }
                    }
-
+                },
+                createRect:function() {
+                    let num  = Math.floor(Math.random() * 7);
+                    let arr = [
+                        [[1,1,1,1]],
+                        [[1,1],[1,1]],
+                        [[1,1,0],[0,1,1]],
+                        [[0,1,1],[1,1,0]],
+                        [[0,1,0],[1,1,1]],
+                        [[1,0,0],[1,1,1]],
+                        [[0,0,1],[1,1,1]]
+                    ]
+                    return arr[num]
+                },
+                pushMap:function() {
+                    let arr = this.arr;
+                    let rect = this.createRect();
+                    for(let i=0;i<rect.length;i++) {
+                        for(let j=0;j<rect[i].length;j++) {
+                            arr[i][j] = rect[i][j]
+                        }
+                    }
+                    return arr;
                 }
             }
 
             Game.init();
-
-
-           
-
         }
     </script>
 </head>
