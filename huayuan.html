@@ -81,7 +81,7 @@
                 let dx = target.x -ball.x;
                 let dy = target.y - ball.y;
                 let dist = Math.sqrt(dx**2 + dy**2);
-                let minDist = width / 10;
+                let minDist = width > height ? width / 10: height / 5;
                 if(dist < minDist) {
                     let ax = dx * spring;
                     let ay = dy * spring;
