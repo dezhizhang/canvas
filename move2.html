@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>js控制视频的大 </title>
+<script type="text/javascript">
+window.onload = function() {
+    let sizeElement  = document.getElementById('videoSize');
+    let videoElement = document.getElementById('theVideo');
+    let widthtoHeightRatio = videoElement.width / videoElement.height;
+    sizeElement.onchange = function(ev) {
+        videoElement.width = ev.target.value;
+        videoElement.height = ev.target.value / widthtoHeightRatio
+    }
+}
+</script>
+</head>
+<body>
+<div>
+<form>
+ 视频的大小 : <input type="range" id="videoSize" min="80" max="1280" step="1" value="320"/>
+  </form>
+  <br>   
+</div>
+<div>
+ 
+    <video autoplay loop controls  id="theVideo" width="320" height="240">
+        <source src="muirbeach.mp4">
+        <source src="muirbeach.webm">
+        <source src="muirbeach.ogg">
+    </video>
+</div>
+
+</body>
+</html>
+
