@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CH7EX3 : Audio Properties And The Canvas</title>
+<script type="text/javascript">
+
+window.onload = function() {
+    let audioElement = document.getElementById('theAudio');
+    let theCanvas = document.getElementById('canvasOne');
+    let ctx = theCanvas.getContext('2d');
+
+    audioElement.onprogress = function () {
+        updateLoadingStatus();
+
+    }
+    audioElement.oncanplaythrough = function() {
+        audioLoaded();
+
+    }
+
+    function updateLoadingStatus() {
+        let loadingStatus = document.getElementById('loadingStatus');
+        let percentLoaded = parseInt((audioElement.buffered.end(0) / audioElement.duration) * 100);
+        loadingStatus.innerHTML = 'loaded' + percentLoaded + '%';
+    }
+
+    function audioLoaded() {
+        drawScreen ()
+
+    }
+
+    function drawScreen (){
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(0,0,theCanvas.width,theCanvas.height);
+        ctx.strokeStyle = '#00000';
+        ctx.strokeRect(5,5,theCanvas.width - 10,theCanvas.height - 10);
+
+        ctx.fillStyle = '#000000';
+        ctx.fillText('Duration'+audioElement,20,20);
+        ctx.fillText('Current'+audioElement.currentTime,20,20);
+        ctx.fillText('Loop'+audioElement.loop,20,60);
+
+    }
+  
+	audioElement.play();
+	setInterval(drawScreen, 33);	
+
+}
+
+
+
+</script>
+
+</head>
+<body>
+<div style="position: absolute; top: 50px; left: 50px;">
+
+<canvas id="canvasOne" width="500" height="300">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+</div>
+
+
+<div id="loadingStatus">
+0%
+</div>
+
+<div  style="position: absolute; top: 50px; left: 600px; ">
+<audio  id="theAudio" controls> 
+<source src="song1.mp3" type="audio/mp3">
+<source src="song1.ogg" type="audio/ogg">
+<source src="song1.wav" type="audio/wav">
+
+Your browser does not support the audio element. 
+</audio>
+
+
+</div>
+
+</body>
+</html>
+
+
+
+
